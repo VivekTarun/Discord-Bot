@@ -1,7 +1,7 @@
-import { Client, GatewayIntentBits } from 'discord.js';
+import { Client, Events, GatewayIntentBits } from 'discord.js';
 import 'dotenv/config'
 
-const client = new Client({
+const client = new Client({ // The term guild is used by the discord API in discord.js to refer to a discord server.
     intents: [
         GatewayIntentBits.Guilds, 
         GatewayIntentBits.GuildMessages,
@@ -10,13 +10,12 @@ const client = new Client({
 });
 const TOKEN = process.env.TOKEN;
 
-
-client.on("messageCreate", (message) => {
-    if(message.author.bot) return;
-    message.reply({
-        content: "Hi from bot",
-    })
+client.once(Events.ClientReady, readyClient => {
+    console.log(`Ready! Logged in as ${readyClient.user.tag}`); // readyClient.user.tag -> name of the bot
 })
+
+
+
 
 
 client.login(TOKEN);
